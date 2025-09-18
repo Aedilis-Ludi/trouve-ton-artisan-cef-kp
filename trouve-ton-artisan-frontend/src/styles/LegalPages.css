@@ -1,0 +1,56 @@
+/* LegalPages.css — styles communs aux pages légales et informatives */
+
+.legal-page {
+  padding: 4rem 0 2rem;  
+  background: #f1f8fc;  
+  min-height: 70vh;     /* occupe bien la hauteur */
+}
+
+.legal-page h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #384050;
+  margin-bottom: 1.5rem;
+  text-align: center;     
+}
+
+.legal-page h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #0074c7;
+  margin-bottom: 1rem;
+}
+
+.legal-page p {
+  font-size: 1rem;
+  color: #384050;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Encadrés "en construction" */
+.legal-page .alert {
+  border-radius: 12px;
+  font-size: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: #f1f8fc;     
+  border: 1px solid #0074c7;
+  color: #00497c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .legal-page {
+    padding: 3rem 1rem;
+  }
+
+  .legal-page h1 {
+    font-size: 2rem;
+    text-align: center; /* sur mobile centré pour lisibilité */
+  }
+
+  .legal-page h4 {
+    font-size: 1.2rem;
+  }
+}

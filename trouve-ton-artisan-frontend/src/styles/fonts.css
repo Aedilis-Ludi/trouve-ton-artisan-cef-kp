@@ -1,0 +1,30 @@
+/* Définition claire et unique de la police Graphik
+   (chemins corrigés vers /public/fonts/Graphik/...) */
+
+/* Graphik Regular */
+@font-face {
+  font-family: 'Graphik';
+  src: url('/fonts/Graphik/Graphik-Regular-Trial.woff2') format('woff2'),
+       url('/fonts/Graphik/Graphik-Regular-Trial.woff')  format('woff'),
+       url('/fonts/Graphik/Graphik-Regular-Trial.otf')   format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Graphik Bold */
+@font-face {
+  font-family: 'Graphik';
+  src: url('/fonts/Graphik/Graphik-Bold-Trial.woff2') format('woff2'),
+       url('/fonts/Graphik/Graphik-Bold-Trial.woff')  format('woff'),
+       url('/fonts/Graphik/Graphik-Bold-Trial.otf')   format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Application en priorité sur html ET body */
+html, body {
+  font-family: 'Graphik', system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu,
+               Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif !important;
+}

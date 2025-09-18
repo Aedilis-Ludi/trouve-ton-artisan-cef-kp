@@ -1,0 +1,153 @@
+/* Header.css 
+
+
+/* Réglages globaux */
+
+:root{
+  --headerH: 72px;        /* hauteur de la barre */
+  --logoH: 75px;          /* hauteur de base du logo (conteneur) */
+  --logoScale: 1.6;       
+}
+
+
+/* Barre header  */
+
+.main-header{
+  background:#f1f8fc;
+  border-bottom:3px solid #0074c7;
+  height:var(--headerH);
+  position:sticky; top:0; z-index:1000;
+  box-shadow:0 2px 5px rgba(0,0,0,.06);
+  display:flex; align-items:center;
+  padding:0;
+}
+
+
+.main-header .container{
+  max-width:1200px;
+  width:100%;
+  padding-left:24px;
+  padding-right:24px;
+}
+
+
+.main-header .navbar{
+  width:100%;
+  padding-top:0; padding-bottom:0;
+  min-height:var(--headerH);
+}
+
+
+/* Skip link */
+
+.skip-link{ position:absolute; left:-9999px; top:0; }
+.skip-link:focus{
+  left:1rem; top:.5rem; z-index:9999; background:#0d6efd; color:#fff;
+  padding:.5rem .75rem; border-radius:.5rem; box-shadow:0 0 0 4px rgba(13,110,253,.25);
+}
+
+/* Marque (marteau + logo) */
+
+.navbar-brand{
+  color:#384050; text-decoration:none;
+  display:flex; align-items:center; gap:12px; margin:0;
+}
+
+/* Carré bleu marteau  */
+.brand-badge{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:56px; height:56px; border-radius:16px;
+  background:#0074c7; color:#f1f8fc; font-size:30px;
+  box-shadow:0 8px 18px rgba(0,141,208,.18);
+}
+
+.brand-logo{
+  height:var(--logoH);
+  width:auto;
+  object-fit:contain;
+  display:block;
+
+  /* agrandissement visuel sans impacter le layout */
+  transform: scale(var(--logoScale));
+  transform-origin: left center;
+
+  will-change: transform;
+}
+
+/* Menu */
+
+.navbar-nav .nav-link{
+  color:#384050; font-weight:100;
+  padding:.5rem 1rem; border-radius:12px; transition:.2s ease;
+}
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active{
+  color:#0074c7; background:#e8f4f8;
+}
+
+
+/* Recherche */
+
+.search-form{ min-width:300px; }
+.search-form .form-control{
+  border:2px solid #0074c7; border-radius:999px;
+  padding:.7rem 2.8rem .7rem 1rem; font-size:.95rem;
+  transition:.2s ease;
+}
+.search-form .form-control:focus{
+  box-shadow:0 0 0 3px rgba(0,116,199,.2); border-color:#00497c;
+}
+.search-btn{
+  position:absolute; right:6px; top:50%; transform:translateY(-50%);
+  border:0; border-radius:999px; background:#007cc3; color:#fff;
+  padding:.45rem .65rem; cursor:pointer;
+}
+.search-btn:hover:not(:disabled){ background:#0064a0; }
+.search-btn:disabled{ opacity:.6; cursor:not-allowed; }
+
+/* Suggestions */
+.search-results{ z-index:1050; max-height:420px; overflow:auto; border:1px solid #dee2e6; }
+.search-result-item{ padding:.75rem 1rem; text-align:left; }
+.search-result-item:hover{ background:#f8f9fa; }
+.search-result-item.active, .search-result-item:focus{
+  background:#f1f8fc; outline:2px solid #0074c7; outline-offset:-2px;
+}
+
+
+/* Burger */
+
+.navbar-toggler{ border:1px solid #0074c7; padding:.4rem .6rem; border-radius:8px; }
+.navbar-toggler:focus{ box-shadow:0 0 0 3px rgba(0,116,199,.25); }
+.navbar-toggler-icon{ color:#0074c7; font-size:1.2rem; font-weight:700; }
+
+
+/* Responsive */
+
+@media (max-width:1199px){
+  :root{
+    --logoH: 50px;
+    --logoScale: 1.5;
+  }
+}
+
+@media (max-width:991px){
+  :root{
+    --headerH: 68px;
+    --logoH: 46px;
+    --logoScale: 1.45;
+  }
+  .navbar-nav{
+    margin-top:1rem; border-top:1px solid #dee2e6; padding-top:1rem;
+  }
+  .search-form{ min-width:220px; margin-top:1rem; }
+}
+
+@media (max-width:576px){
+  :root{
+    --headerH: 60px;
+    --logoH: 40px;
+    --logoScale: 1.35;
+  }
+  .search-form{ min-width:100%; }
+  .search-form .form-control{ font-size:.9rem; padding:.6rem 2.2rem .6rem .85rem; }
+}

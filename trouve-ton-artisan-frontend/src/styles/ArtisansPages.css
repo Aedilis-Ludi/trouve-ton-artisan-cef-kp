@@ -1,0 +1,144 @@
+/* === Grille des artisans (3 par ligne quand il y a la place) === */
+.artisans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* === Carte artisan façon "artisans du mois" === */
+.ac-card {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(0, 20, 60, 0.08);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.ac-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(0, 20, 60, 0.12);
+}
+
+/* Bandeau visuel */
+.ac-card-hero {
+  position: relative;
+  height: 180px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #f1f8fc 0%, #e8f4f8 100%);
+}
+
+/* L’icône (favicon) qui remplace l’emoji */
+.ac-hero-icon {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 12px;
+  box-shadow: 0 8px 24px rgba(0, 116, 199, .15);
+}
+
+/* Pastille rouge (rang) */
+.ac-rank {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: linear-gradient(135deg, #cd2c2e, #ff4b4b);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 22px;
+  padding: 6px 12px;
+  font-size: .9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 8px 18px rgba(205, 44, 46, .25);
+}
+
+/* Badge "Artisan du mois" (optionnel) */
+.ac-month-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #ffd166;
+  color: #6b4300;
+  font-weight: 700;
+  border-radius: 22px;
+  padding: 6px 12px;
+  font-size: .9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 6px 14px rgba(107, 67, 0, .18);
+}
+
+/* Corps */
+.ac-card-body {
+  padding: 16px 18px 18px;
+}
+
+.ac-title {
+  font-size: 1.05rem;
+  margin: 0 0 6px 0;
+  font-weight: 700;
+  color: #384050;
+}
+
+.ac-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ac-title a:hover {
+  text-decoration: underline;
+}
+
+/* Étoiles + note */
+.ac-stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 10px;
+  color: #ffb400;
+  font-size: .98rem;
+}
+
+.ac-stars .fa-star,
+.ac-stars .fa-star-half-alt,
+.ac-stars .far.fa-star {
+  color: #ffb400;
+}
+
+.ac-stars-note {
+  color: #6b7280;
+  margin-left: 6px;
+  font-size: .9rem;
+}
+
+/* Métadonnées : spécialité, localisation */
+.ac-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ac-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: #f4f7fb;
+  color: #384050;
+  border-radius: 999px;
+  font-size: .9rem;
+  border: 1px solid rgba(0, 116, 199, .08);
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .artisans-grid {
+    grid-template-columns: 1fr;
+  }
+}

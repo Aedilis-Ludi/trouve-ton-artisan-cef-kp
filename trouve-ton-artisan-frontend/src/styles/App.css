@@ -1,0 +1,158 @@
+/* App.css */
+
+/* ==== Police par défaut de l'appli (impossible à écraser) ==== */
+:root {
+  --app-font: 'Graphik', system-ui, -apple-system, 'Segoe UI', Roboto,
+              Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+}
+
+html, body {
+  font-family: var(--app-font) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis-weight: none;
+  font-synthesis-style: none;
+}
+
+/* Titres en bold 700 (Graphik-Bold) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--app-font) !important;
+  font-weight: 700 !important;
+}
+
+/* ❌ On SUPPRIME l’ancienne règle qui cassait Font Awesome :
+   body * { font-family: inherit !important; } */
+
+/* Option : si tu as du texte en 500/600, force à 400/700 existants */
+.font-regular, .fw-normal { font-weight: 400 !important; }
+.font-bold, .fw-bold     { font-weight: 700 !important; }
+
+/* Structure générale de l'application */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Contenu principal */
+.main-content {
+  flex: 1;
+  width: 100%;
+}
+
+/* Page 404 */
+.error-404 {
+  padding: 2rem 0;
+}
+
+.error-404 img {
+  opacity: 0.8;
+  margin-bottom: 2rem;
+}
+
+.error-404 .display-1 {
+  font-size: 8rem;
+  line-height: 1;
+  text-shadow: 2px 2px 4px rgba(0, 116, 199, 0.1);
+}
+
+.error-404 h2 {
+  color: #384050;
+  margin-bottom: 1rem;
+}
+
+/* Pages en construction */
+.alert-info {
+  border-color: #0074c7;
+  background-color: #e8f4f8;
+  color: #384050;
+}
+
+.alert-info h4 {
+  color: #0074c7;
+  margin-bottom: 0.5rem;
+}
+
+/* Classes utilitaires globales */
+.text-primary { color: #0074c7 !important; }
+.bg-primary   { background-color: #0074c7 !important; }
+
+.btn-primary {
+  background-color: #0074c7;
+  border-color: #0074c7;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #00497c;
+  border-color: #00497c;
+}
+
+.btn-outline-primary {
+  color: #0074c7;
+  border-color: #0074c7;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: #0074c7;
+  border-color: #0074c7;
+}
+
+/* Transitions globales */
+* {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Accessibilité - focus visible */
+*:focus {
+  outline: 2px solid #0074c7;
+  outline-offset: 2px;
+}
+
+button:focus,
+.btn:focus,
+a:focus {
+  outline: 2px solid #0074c7;
+  outline-offset: 2px;
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .error-404 .display-1 { font-size: 6rem; }
+  .error-404 h2 { font-size: 1.5rem; }
+}
+
+@media (max-width: 576px) {
+  .error-404 .display-1 { font-size: 4rem; }
+  .error-404 .btn { width: 100%; margin-bottom: 0.5rem; }
+}
+
+/* Spinner loading personnalisé */
+.spinner-border-primary { color: #0074c7; }
+
+/* Container responsive personnalisé */
+.container { max-width: 1200px; }
+
+
+/* === Protection Font Awesome (NE PAS ENLEVER) === */
+.fa, .fas, .far, .fal, .fab,
+.fa-solid, .fa-regular, .fa-brands,
+i.fa, i.fas, i.far, i.fal, i.fab {
+  font-style: normal;
+}
+
+.fa, .fas, .fa-solid {
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 900 !important;
+}
+
+.far, .fa-regular {
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 400 !important;
+}
+
+.fab, .fa-brands {
+  font-family: "Font Awesome 6 Brands" !important;
+  font-weight: 400 !important;
+}

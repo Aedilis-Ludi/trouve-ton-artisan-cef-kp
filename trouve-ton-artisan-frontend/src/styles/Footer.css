@@ -1,0 +1,212 @@
+/* src/styles/Footer.css */
+
+:root {
+  --ft-bg: #004080;        /* bleu foncé */
+  --ft-fg: #ffffff;
+  --ft-fg-dim: #cfe6ff;
+  --ft-link: #ffffff;
+  --ft-link-hover: #ffd966;
+  --ft-maxw: 1200px;
+}
+
+.ft-container {
+  width: 100%;
+  max-width: var(--ft-maxw);
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+.ft-footer {
+  background: var(--ft-bg);
+  color: var(--ft-fg);
+  padding-top: 10px;
+}
+
+/* ========================
+   Partie supérieure (TOP)
+   ======================== */
+
+/* ❌ Avant : flex + gap: 580px -> casse tout en mobile */
+/* ✅ Maintenant : grid responsive */
+.ft-footer__top {
+  display: grid;
+  grid-template-columns: 320px 1fr; /* marque + coordonnées */
+  align-items: start;
+  gap: 32px;
+  padding: 10px 0 0;
+}
+
+/* Logo dans bulle */
+.ft-footer__logo-bubble {
+  background: #ffffff;
+  border-radius: 50%;
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 8px 22px rgba(0,0,0,.18);
+}
+
+.ft-footer__logo {
+  width: 84px;
+  height: auto;
+}
+
+.ft-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.ft-footer__title {
+  margin: 0 0 4px;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.ft-footer__subtitle {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--ft-fg-dim);
+}
+
+.ft-footer__desc {
+  margin: 4px 0 0;
+  font-size: 1rem;
+  color: var(--ft-fg-dim);
+}
+
+/* Bloc coordonnées */
+.ft-footer__contact {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.ft-footer__h4 {
+  margin: 0 0 10px;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.ft-footer__address {
+  font-style: normal;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.ft-footer__hours {
+  margin-top: 8px;
+  color: var(--ft-fg-dim);
+}
+
+.ft-footer__phone a {
+  color: var(--ft-link);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.ft-footer__phone a:hover,
+.ft-footer__phone a:focus-visible {
+  color: var(--ft-link-hover);
+  text-decoration: underline;
+}
+
+/* Séparateur */
+.ft-footer__divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 20px 0;
+}
+
+/* =========================
+   Partie inférieure (BOTTOM)
+   ========================= */
+
+.ft-footer__bottom {
+  text-align: center;
+  padding: 10px 0 24px;
+}
+
+.ft-footer__legal {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 8px;
+  display: inline-flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.ft-footer__legal a {
+  color: var(--ft-link);
+  text-decoration: none;
+}
+
+.ft-footer__legal a:hover,
+.ft-footer__legal a:focus-visible {
+  color: var(--ft-link-hover);
+  text-decoration: underline;
+}
+
+.ft-footer__copy {
+  font-size: 0.9rem;
+  color: var(--ft-fg-dim);
+  margin: 0;
+}
+
+/* ========================
+   RESPONSIVE
+   ======================== */
+
+/* < 992px : on peut garder 2 colonnes mais resserrer */
+@media (max-width: 992px) {
+  .ft-footer__top {
+    grid-template-columns: 1fr 1fr; /* marque + contact */
+    gap: 24px;
+  }
+}
+
+/* < 768px : 1 seule colonne, tout centré */
+@media (max-width: 768px) {
+  .ft-footer__top {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .ft-footer__brand {
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .ft-footer__logo-bubble {
+    width: 86px;
+    height: 86px;
+  }
+  .ft-footer__logo {
+    width: 64px;
+  }
+
+  .ft-footer__contact {
+    padding: 14px;
+    border-radius: 12px;
+    text-align: left;           /* lecture plus naturelle */
+  }
+
+  /* Sécurité si d’anciens styles forçaient des hauteurs */
+  .ft-footer, .ft-footer__top, .ft-footer__bottom {
+    min-height: unset !important;
+    height: auto !important;
+  }
+}
+
+/* < 480px : micro-ajustements typographiques */
+@media (max-width: 480px) {
+  .ft-footer__title { font-size: 1.3rem; }
+  .ft-footer__subtitle { font-size: .98rem; }
+  .ft-footer__desc { font-size: .95rem; }
+  .ft-footer__legal a { font-size: .95rem; }
+}

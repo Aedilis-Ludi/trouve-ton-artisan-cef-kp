@@ -1,0 +1,341 @@
+/* ArtisanCard.css */
+
+/* Grille des artisans */
+.artisans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+/* Carte artisan */
+.artisan-card {
+  position: relative;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  border: 1px solid #f1f8fc;
+}
+
+.artisan-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 116, 199, 0.15);
+  border-color: #0074c7;
+}
+
+/* Badge artisan du mois */
+.artisan-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(135deg, #cd2c2e, #ff4444);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(205, 44, 46, 0.3);
+}
+
+.artisan-badge i {
+  animation: pulse 2s infinite;
+}
+
+/* Image artisan */
+.artisan-image {
+  height: 180px;
+  background: linear-gradient(135deg, #f1f8fc, #e8f4f8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.artisan-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.artisan-card:hover .artisan-image img {
+  transform: scale(1.05);
+}
+
+.artisan-emoji {
+  font-size: 4rem;
+  opacity: 0.8;
+  transition: transform 0.3s ease;
+}
+
+.artisan-card:hover .artisan-emoji {
+  transform: scale(1.1);
+}
+
+/* Informations artisan */
+.artisan-info {
+  padding: 1.5rem;
+  position: relative;
+}
+
+.artisan-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #384050;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.artisan-owner {
+  color: #384050 !important;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Étoiles de notation */
+.artisan-stars {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.artisan-stars i {
+  color: #cd2c2e;
+  font-size: 0.9rem;
+  margin-right: 2px;
+}
+
+.artisan-stars .far {
+  color: #f1f8fc;
+}
+
+.artisan-stars .text-muted {
+  font-size: 0.8rem;
+  color: #384050 !important;
+  margin-left: 0.3rem;
+}
+
+/* Spécialité */
+.artisan-specialty {
+  display: flex;
+  align-items: center;
+  color: #0074c7;
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-bottom: 0.6rem;
+}
+
+.artisan-specialty i {
+  color: #0074c7;
+  width: 16px;
+}
+
+/* Localisation */
+.artisan-location {
+  display: flex;
+  align-items: center;
+  color: #384050;
+  font-size: 0.85rem;
+  margin-bottom: 0.8rem;
+}
+
+.artisan-location i {
+  color: #cd2c2e;
+  width: 16px;
+}
+
+/* Description */
+.artisan-description {
+  color: #384050 !important;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  margin-bottom: 0.8rem;
+}
+
+
+.stretched-link::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  content: "";
+}
+
+/* Bouton site web */
+.artisan-info .btn {
+  position: relative;
+  z-index: 2;
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+}
+
+.artisan-info .btn-outline-primary {
+  border-color: #0074c7;
+  color: #0074c7;
+}
+
+.artisan-info .btn-outline-primary:hover {
+  background-color: #0074c7;
+  border-color: #0074c7;
+}
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* États de chargement */
+.artisan-card .placeholder-glow {
+  animation: placeholder-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes placeholder-glow {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+/* Spinner de chargement */
+.artisan-image .spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .artisans-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0.5rem 0;
+  }
+  
+  .artisan-card {
+    border-radius: 8px;
+  }
+  
+  .artisan-image {
+    height: 160px;
+  }
+  
+  .artisan-emoji {
+    font-size: 3rem;
+  }
+  
+  .artisan-info {
+    padding: 1.2rem;
+  }
+  
+  .artisan-name {
+    font-size: 1.1rem;
+  }
+  
+  .artisan-badge {
+    top: 8px;
+    right: 8px;
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .artisans-grid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+  
+  .artisan-image {
+    height: 140px;
+  }
+  
+  .artisan-emoji {
+    font-size: 2.5rem;
+  }
+  
+  .artisan-info {
+    padding: 1rem;
+  }
+  
+  .artisan-name {
+    font-size: 1rem;
+  }
+  
+  .artisan-specialty,
+  .artisan-location {
+    font-size: 0.8rem;
+  }
+}
+
+/* États vides et d'erreur */
+.text-center.p-4 {
+  padding: 3rem 1rem !important;
+}
+
+.text-center.p-4 i {
+  color: #384050;
+  margin-bottom: 1rem;
+}
+
+.alert-warning {
+  border-color: #cd2c2e;
+  background-color: #f1f8fc;
+  color: #82b864;
+}
+
+/* Accessibilité */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Focus pour l'accessibilité */
+.stretched-link:focus::after {
+  outline: 2px solid #0074c7;
+  outline-offset: 2px;
+}
+
+.artisan-info .btn:focus {
+  box-shadow: 0 0 0 3px rgba(0, 116, 199, 0.25);
+}
