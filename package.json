@@ -1,9 +1,0 @@
-{
-  "name": "trouve-ton-artisan-fullstack",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "build:front": "cd trouve-ton-artisan-frontend && npm install && npm run build",
-    "start": "cd trouve-ton-artisan && npm install && npm run build:front && npm start"
-  }
-}
