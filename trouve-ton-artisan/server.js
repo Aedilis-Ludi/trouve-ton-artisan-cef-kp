@@ -4,10 +4,14 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-app.use(express.static(path.join(__dirname, '../frontend/build')));
+require('dotenv').config();
+
+const app = express();
+
+app.use(express.static(path.join(__dirname, '../trouve-ton-artisan-frontend/build')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../trouve-ton-artisan-frontend/build', 'index.html'));
 });
 require('dotenv').config();
 
@@ -29,7 +33,6 @@ const artisansRoutes = require('./routes/artisans');
 const categoriesRoutes = require('./routes/categories');
 const contactRoutes = require('./routes/contact');
 
-const app = express();
 const PORT = process.env.PORT || 3001;
 
 /* BASE CONFIG */
