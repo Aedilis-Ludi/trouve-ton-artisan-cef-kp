@@ -26,18 +26,21 @@ app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
 // ===== PARSERS =====
-app.use(express.json({
-  limit: '10mb',
-  verify: (req, res, buf) => {
-    if (!buf || buf.length === 0) return;
-    try { JSON.parse(buf.toString()); }
-    catch {
-      const err = new Error('INVALID_JSON');
-      err.statusCode = 400;
-      throw err;
-    }
-  },
-}));
+app.use(
+  express.json({
+    limit: '10mb',
+    verify: (req, res, buf) => {
+      if (!buf || buf.length === 0) return;
+      try {
+        JSON.parse(buf.toString());
+      } catch {
+        const err = new Error('INVALID_JSON');
+        err.statusCode = 400;
+        throw err;
+      }
+    },
+  })
+);
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // ===== LOG + SANITIZE =====
@@ -58,9 +61,12 @@ if (process.env.NODE_ENV === 'production') {
 // ===== DB =====
 const { testConnection, syncDatabase } = require('./config/database');
 
-// Flags pour contrôler la sync en prod
+// ✅ IMPORTANT : charger les modèles & associations AVANT toute sync
+require('./models');
+
+// Flags pour contrôler la sync en prod (via variables d’env Render)
 const SHOULD_SYNC = process.env.SYNC_DB_ON_BOOT === 'true';
-const SYNC_FORCE = process.env.SYNC_DB_FORCE === 'true'; // ⚠️ true = DROP & recrée
+const SYNC_FORCE = process.env.SYNC_DB_FORCE === 'true'; // ⚠️ true = DROP + CREATE
 
 // ===== HEALTH =====
 app.get('/api/health', (req, res) => {
@@ -88,7 +94,8 @@ app.get('/api/info', async (req, res) => {
       api: {
         nom: 'API Trouve ton artisan',
         version: '1.0.0',
-        description: 'API pour la plateforme des artisans de la région Auvergne-Rhône-Alpes',
+        description:
+          'API pour la plateforme des artisans de la région Auvergne-Rhône-Alpes',
         documentation: '/api/docs',
         contact: 'adilis.ludi@gmail.com',
       },
@@ -97,7 +104,11 @@ app.get('/api/info', async (req, res) => {
   } catch {
     res.json({
       success: true,
-      api: { nom: 'API Trouve ton artisan', version: '1.0.0', status: 'Démarrage en cours...' },
+      api: {
+        nom: 'API Trouve ton artisan',
+        version: '1.0.0',
+        status: 'Démarrage en cours...',
+      },
     });
   }
 });
@@ -126,9 +137,21 @@ app.get('/api/docs', (req, res) => {
 });
 
 // ===== SERVIR LE FRONT (APRÈS les routes API) =====
-app.use(express.static(path.join(__dirname, '../trouve-ton-artisan-frontend/build')));
+app.use(
+  express.static(
+    path.join(__dirname, '../trouve-ton-artisan-frontend/build')
+  )
+);
+
+// Catch-all /api/*
 app.get(/^\/(?!api).*/, (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../trouve-ton-artisan-frontend/build', 'index.html'));
+  res.sendFile(
+    path.resolve(
+      __dirname,
+      '../trouve-ton-artisan-frontend/build',
+      'index.html'
+    )
+  );
 });
 
 // ===== 404 API =====
@@ -147,24 +170,47 @@ app.use((error, req, res, next) => {
     console.error('❌ Erreur serveur:', error);
   }
   if (error.message === 'INVALID_JSON' || error.type === 'entity.parse.failed') {
-    return res.status(400).json({ success: false, message: 'Format JSON invalide', code: 'INVALID_JSON' });
+    return res
+      .status(400)
+      .json({ success: false, message: 'Format JSON invalide', code: 'INVALID_JSON' });
   }
   if (error.name === 'SequelizeValidationError') {
     return res.status(400).json({
-      success: false, message: 'Erreur de validation des données', code: 'VALIDATION_ERROR',
-      errors: error.errors?.map(e => ({ field: e.path, message: e.message, value: e.value })),
+      success: false,
+      message: 'Erreur de validation des données',
+      code: 'VALIDATION_ERROR',
+      errors: error.errors?.map((e) => ({
+        field: e.path,
+        message: e.message,
+        value: e.value,
+      })),
     });
   }
   if (error.name === 'SequelizeUniqueConstraintError') {
-    return res.status(409).json({ success: false, message: 'Conflit - Donnée déjà existante', code: 'DUPLICATE_ENTRY', field: error.errors?.[0]?.path });
+    return res.status(409).json({
+      success: false,
+      message: 'Conflit - Donnée déjà existante',
+      code: 'DUPLICATE_ENTRY',
+      field: error.errors?.[0]?.path,
+    });
   }
   if (error.name === 'SequelizeConnectionError') {
-    return res.status(503).json({ success: false, message: 'Service temporairement indisponible', code: 'DATABASE_CONNECTION_ERROR' });
+    return res.status(503).json({
+      success: false,
+      message: 'Service temporairement indisponible',
+      code: 'DATABASE_CONNECTION_ERROR',
+    });
   }
   if (error.message && error.message.includes('CORS')) {
-    return res.status(403).json({ success: false, message: 'Accès refusé - Origine non autorisée', code: 'CORS_ERROR' });
+    return res.status(403).json({
+      success: false,
+      message: 'Accès refusé - Origine non autorisée',
+      code: 'CORS_ERROR',
+    });
   }
-  res.status(error.statusCode || 500).json({ success: false, message: 'Erreur interne du serveur', code: 'INTERNAL_SERVER_ERROR' });
+  res
+    .status(error.statusCode || 500)
+    .json({ success: false, message: 'Erreur interne du serveur', code: 'INTERNAL_SERVER_ERROR' });
 });
 
 // ===== START =====
@@ -173,13 +219,15 @@ const startServer = async () => {
     console.log("🚀 Démarrage de l'API Trouve ton artisan...");
     await testConnection();
 
-    // ⚡ Nouvelle logique : sync activable en prod via variables
-    if (SHOULD_SYNC) {
-      console.log(`🔧 Sync DB (force=${SYNC_FORCE})...`);
-      await syncDatabase(SYNC_FORCE);
+    // Sync DB contrôlée par variables d’env 
+    if (process.env.SYNC_DB_ON_BOOT === 'true') {
+      const force = process.env.SYNC_DB_FORCE === 'true';
+      console.log(`🔧 Sync DB (force=${force})...`);
+      await syncDatabase(force);
       console.log('✅ Sync terminé');
     } else if (process.env.NODE_ENV === 'development') {
       await syncDatabase(false);
+      console.log('✅ Sync (dev) terminé');
     }
 
     app.listen(PORT, () => {
