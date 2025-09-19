@@ -2,7 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-require('dotenv').config(); 
+require('dotenv').config();
 
 const app = express();
 
@@ -57,6 +57,10 @@ if (process.env.NODE_ENV === 'production') {
 
 // ===== DB =====
 const { testConnection, syncDatabase } = require('./config/database');
+
+// Flags pour contrôler la sync en prod
+const SHOULD_SYNC = process.env.SYNC_DB_ON_BOOT === 'true';
+const SYNC_FORCE = process.env.SYNC_DB_FORCE === 'true'; // ⚠️ true = DROP & recrée
 
 // ===== HEALTH =====
 app.get('/api/health', (req, res) => {
@@ -122,10 +126,7 @@ app.get('/api/docs', (req, res) => {
 });
 
 // ===== SERVIR LE FRONT (APRÈS les routes API) =====
-// 1) fichiers statiques du build React
 app.use(express.static(path.join(__dirname, '../trouve-ton-artisan-frontend/build')));
-
-// 2) catch-all pour TOUT sauf /api/* -> renvoie index.html
 app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.resolve(__dirname, '../trouve-ton-artisan-frontend/build', 'index.html'));
 });
@@ -172,7 +173,12 @@ const startServer = async () => {
     console.log("🚀 Démarrage de l'API Trouve ton artisan...");
     await testConnection();
 
-    if (process.env.NODE_ENV === 'development') {
+    // ⚡ Nouvelle logique : sync activable en prod via variables
+    if (SHOULD_SYNC) {
+      console.log(`🔧 Sync DB (force=${SYNC_FORCE})...`);
+      await syncDatabase(SYNC_FORCE);
+      console.log('✅ Sync terminé');
+    } else if (process.env.NODE_ENV === 'development') {
       await syncDatabase(false);
     }
 
